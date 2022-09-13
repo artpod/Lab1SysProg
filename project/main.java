@@ -1,3 +1,8 @@
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
@@ -17,7 +22,7 @@ class StringLengthSort implements Comparator<String>{
     }
 }
 
-class HelloWorld {
+class main {
     public static void main(String[] args) {
         ArrayList<String> words = new ArrayList<>();
         Scanner userPathInput = new Scanner(System.in);
@@ -26,7 +31,7 @@ class HelloWorld {
         String nextLine;
         try {
             userPathInput.close();
-            inputFile = new Scanner(Paths.get("example.txt"));
+            inputFile = new Scanner(Paths.get("../words/input.txt"));
             while (inputFile.hasNext()) {
                 nextLine = inputFile.nextLine();
                 if(nextLine.isEmpty()) {
@@ -34,7 +39,7 @@ class HelloWorld {
                 }
                 List<String> wordsInLine = Arrays.asList(nextLine.split("[, ?.@]+"));
                 for (String word : wordsInLine) {
-                    word = word.toLowerCase();
+                    //word = word.toLowerCase();
                     if (word.length() > 30) {
                         word = word.substring(0, 30);
                     }
@@ -59,12 +64,15 @@ class HelloWorld {
             Comparator<String> stringLengthComparator = new StringLengthSort();
             Collections.sort(words, stringLengthComparator);
 
-            for (String word : words)
-            System.out.println(word);
+            BufferedWriter writer = new BufferedWriter(new FileWriter("../words/output.txt"));
+            for (String word : words) {
+                writer.write(word+'\n');
+                System.out.println(word);
+            }
+            writer.close();
 
         } catch (IOException | NoSuchElementException | IllegalStateException e){
-            //e.printStackTrace();
-            System.out.println("Something wrong\n");
+            System.out.println("Something is wrong\n");
         }
     }
 }
