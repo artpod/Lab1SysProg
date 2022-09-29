@@ -44,6 +44,9 @@ class main {
                         word = word.substring(0, 30);
                     }
                     Boolean correct = true;
+                    if (words.contains(word) || word.isEmpty()) {
+                        correct = false;
+                    }
                     if (correct) {
                         words.add(word);
                     }
